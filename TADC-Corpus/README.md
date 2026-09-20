@@ -359,5 +359,5 @@ If you use TADC-Corpus in your research, please cite our work:
 
 # License & Acknowledgements
 
-* This repository is released under academic research terms. Please review `LICENSE` for details.
+*This repository is released under the MIT License. See the `LICENSE` file for full terms.
 * This work relies on open-source contributions from [DINOv3](https://github.com/facebookresearch/dinov3), [Qwen3-VL](https://github.com/QwenLM/Qwen3-VL), and [Ultralytics](https://github.com/ultralytics/ultralytics).

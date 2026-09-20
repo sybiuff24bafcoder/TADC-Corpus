@@ -1,0 +1,3 @@
+# Main GPU environment dependencies.
+# External repositories are installed by scripts/setup_external_repos.py.
+-r requirements/cu126.txt

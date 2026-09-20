@@ -1,0 +1,25 @@
+name: tadc-corpus-cpu
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - git
+  - pip:
+      - torch==2.7.1
+      - torchvision==0.22.1
+      - numpy==1.26.4
+      - opencv-python==4.10.0.84
+      - Pillow==10.4.0
+      - tqdm==4.67.1
+      - scikit-image==0.24.0
+      - PyYAML==6.0.2
+      - python-dotenv==1.0.1
+      - dashscope>=1.23.0
+      - requests>=2.31.0
+      - scipy>=1.10.0
+      - matplotlib>=3.7.0
+      - pandas>=2.0.0
+      - seaborn>=0.13.0
+      - psutil>=5.9.0
+      - py-cpuinfo>=9.0.0

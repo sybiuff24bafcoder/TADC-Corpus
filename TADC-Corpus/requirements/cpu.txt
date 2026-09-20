@@ -1,0 +1,5 @@
+# CPU-only fallback for local testing.
+# DINOv3 inference is expected to be very slow on CPU.
+torch==2.7.1
+torchvision==0.22.1
+-r common.txt

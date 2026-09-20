@@ -1,0 +1,108 @@
+# TADC-Corpus unified configuration.
+# Replace all /path/to/... values with your local paths.
+
+paths:
+  image_dir: "/path/to/dataset/images/train"
+
+  # External DINOv3 repository and checkpoint.
+  dinov3_repo: "/path/to/dinov3"
+  dinov3_checkpoint: "/path/to/dinov3/weights/dinov3_vitl16_pretrain_lvd1689m-8aa4cbdd.pth"
+
+  # Repository-managed outputs.
+  output_root: "./outputs"
+
+  # Stage 3 will use this by default:
+  # ./outputs/stage2/yolo_labels
+  stage2_yolo_labels: "./outputs/stage2/yolo_labels"
+
+dataset:
+  # Example: VOC07+12 class order from the supplied Qwen script.
+  # Replace with the exact class vocabulary for your experiment.
+  classes:
+    - aeroplane
+    - bicycle
+    - bird
+    - boat
+    - bottle
+    - bus
+    - car
+    - cat
+    - chair
+    - cow
+    - diningtable
+    - dog
+    - horse
+    - motorbike
+    - person
+    - pottedplant
+    - sheep
+    - sofa
+    - train
+    - tvmonitor
+
+stage1:
+  model_name: "dinov3_vitl16"
+  n_layers_fusion: 4
+  input_size: 512
+
+  k_neighbors: 15
+  beta: 0.30
+  max_iter: 10
+  softmax_scale: 5.0
+
+  slicing_enabled: true
+  overlap_ratio: 0.20
+  crop_ratio: 0.60
+  min_crop_size: 100
+
+  bbox_area_threshold: 50
+  nms_iou_threshold: 0.45
+
+stage2:
+  model: "qwen3-vl-flash"
+  target_long_edge: 1024
+  max_workers: 4
+  max_retries: 2
+  retry_interval: 3.0
+
+  # Optional class-specific prompt additions.
+  class_prompts: {}
+
+stage3:
+  dataset_root: "/path/to/yolo_dataset"
+  work_dir: "./outputs/stage3"
+  base_model: "yolov8s.yaml"
+
+  num_rounds: 3
+  image_size: 640
+  batch_size: 32
+  workers: 8
+
+  iou_merge_thr: 0.50
+  lmm_init_conf: 1.0
+  prediction_conf: 0.05
+
+  # The supplied training script uses decay_rate=0.80 in the merge logic.
+  decay_rate: 0.80
+
+  # Original supplied Stage-3 schedule.
+  round_schedule:
+    "1":
+      epochs: 100
+      lr0: 0.005
+      close_mosaic: 10
+      warmup_epochs: 3.0
+    "2":
+      epochs: 30
+      lr0: 0.002
+      close_mosaic: 5
+      warmup_epochs: 2.0
+    "3":
+      epochs: 30
+      lr0: 0.001
+      close_mosaic: 5
+      warmup_epochs: 2.0
+
+runtime:
+  device: "auto"
+  enable_visualization: true
